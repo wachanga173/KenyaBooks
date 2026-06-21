@@ -1,0 +1,9 @@
+node_modules
+dist
+dist-electron
+release
+*.local
+logs
+*.log
+.DS_Store
+kenya_accounting.sqlite

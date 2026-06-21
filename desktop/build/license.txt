@@ -1,0 +1,29 @@
+KENYABOOKS SOFTWARE LICENSE, TERMS OF SERVICE, AND PRIVACY POLICY
+
+IMPORTANT—READ CAREFULLY: This End-User License Agreement ("EULA") is a legal agreement between you (either an individual or a single entity) and the developers of KenyaBooks for the software product identified above, which includes computer software and may include associated media, printed materials, and "online" or electronic documentation ("SOFTWARE PRODUCT"). By installing, copying, or otherwise using the SOFTWARE PRODUCT, you agree to be bound by the terms of this EULA.
+
+1. GRANT OF LICENSE
+This EULA grants you the following rights:
+- Installation and Use: You may install and use an unlimited number of copies of the SOFTWARE PRODUCT.
+- Reproduction and Distribution: You may reproduce and distribute an unlimited number of copies of the SOFTWARE PRODUCT.
+
+2. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS
+- Maintenance of Copyright Notices: You must not remove or alter any copyright notices on any and all copies of the SOFTWARE PRODUCT.
+- Prohibition on Reverse Engineering, Decompilation, and Disassembly: You may not reverse engineer, decompile, or disassemble the SOFTWARE PRODUCT, except and only to the extent that such activity is expressly permitted by applicable law notwithstanding this limitation.
+- Rental: You may not rent, lease, or lend the SOFTWARE PRODUCT.
+
+3. TERMINATION
+Without prejudice to any other rights, KenyaBooks may terminate this EULA if you fail to comply with the terms and conditions of this EULA. In such event, you must destroy all copies of the SOFTWARE PRODUCT and all of its component parts.
+
+4. PRIVACY POLICY AND DATA LOCALIZATION
+- Data Storage: The SOFTWARE PRODUCT operates completely offline. All financial data, personal information, payroll records, and documents created or imported into the SOFTWARE PRODUCT are stored LOCALLY on your device's hard drive within the designated Workspace folder (e.g., Documents\KenyaBooks). 
+- Data Privacy: KenyaBooks does not transmit, collect, or upload your data to any external cloud servers or third-party analytics services. You are solely responsible for securing, encrypting, and backing up your local database and workspace files.
+- Third-Party Portals: The SOFTWARE PRODUCT includes a built-in browser for convenience to access external government portals (e.g., KRA iTax, SHA, NSSF, PPIP). When using these external portals, you are subject to the privacy policies of the respective government agencies. KenyaBooks does not intercept or record data transmitted through these encrypted portal sessions.
+
+5. LIMITATION OF LIABILITY
+IN NO EVENT SHALL KENYABOOKS OR ITS SUPPLIERS BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE PRODUCT, EVEN IF KENYABOOKS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. 
+
+6. COMPLIANCE WITH LAWS
+You agree to use the SOFTWARE PRODUCT in compliance with all applicable local, state, national, and international laws, rules and regulations, including but not limited to Kenyan accounting, tax, and employment laws.
+
+By accepting this agreement, you acknowledge that you have read and understand these terms.

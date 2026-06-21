@@ -1,0 +1,11 @@
+{
+  "name": "kenya-accounting",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:desktop": "cd desktop && npm run dev",
+    "dev:web": "cd web && npm run dev",
+    "build:desktop": "cd desktop && npm run build",
+    "build:web": "cd web && npm run build"
+  }
+}
