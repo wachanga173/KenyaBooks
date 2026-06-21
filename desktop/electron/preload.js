@@ -64,6 +64,13 @@ contextBridge.exposeInMainWorld('api', {
     write: (fp, data) => ipcRenderer.invoke('file:write', fp, data),
     read: (fp) => ipcRenderer.invoke('file:read', fp),
   },
+  workspace: {
+    list: () => ipcRenderer.invoke('workspace:list'),
+    create: (name) => ipcRenderer.invoke('workspace:create', name),
+    switch: (name) => ipcRenderer.invoke('workspace:switch', name),
+    current: () => ipcRenderer.invoke('workspace:current'),
+    exportFile: (subfolder, filename, buffer) => ipcRenderer.invoke('workspace:exportFile', subfolder, filename, buffer),
+  },
   db: {
     backup: () => ipcRenderer.invoke('db:backup'),
     restore: () => ipcRenderer.invoke('db:restore'),

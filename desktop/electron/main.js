@@ -14,11 +14,24 @@ const { autoUpdater } = require('electron-updater');
 let mainWindow;
 let db;
 
-function initDb() {
+let currentWorkspace = 'Default';
+
+function getWorkspacePath(name) {
+  const docsPath = app.getPath('documents');
+  if (!name || name === 'Default') return path.join(docsPath, 'KenyaBooks');
+  return path.join(docsPath, 'KenyaBooks', 'Workspaces', name);
+}
+
+function initDb(workspaceName = 'Default') {
   try {
+    if (db) {
+      db.close();
+      db = null;
+    }
+    
+    currentWorkspace = workspaceName;
     const Database = require('better-sqlite3');
-    const docsPath = app.getPath('documents');
-    const workspacePath = path.join(docsPath, 'KenyaBooks');
+    const workspacePath = getWorkspacePath(workspaceName);
     
     // Automatically provision workspace folders
     const folders = ['Spreadsheets', 'Payroll', 'Reports', 'Exports'];
@@ -499,6 +512,33 @@ app.whenReady().then(() => {
   ipcMain.handle('file:openDialog', async (_e, opts) => dialog.showOpenDialog(mainWindow, { title: opts.title || 'Open', filters: opts.filters || [{ name: 'All', extensions: ['*'] }], properties: ['openFile'] }));
   ipcMain.handle('file:write', async (_e, fp, data) => { fs.writeFileSync(fp, Buffer.from(data)); return { success: true }; });
   ipcMain.handle('file:read', async (_e, fp) => fs.readFileSync(fp));
+
+  // ═══ WORKSPACES ═══
+  ipcMain.handle('workspace:list', () => {
+    const docsPath = app.getPath('documents');
+    const base = path.join(docsPath, 'KenyaBooks', 'Workspaces');
+    if (!fs.existsSync(base)) fs.mkdirSync(base, { recursive: true });
+    const folders = fs.readdirSync(base, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name);
+    return ['Default', ...folders];
+  });
+  ipcMain.handle('workspace:create', (_e, name) => {
+    if (!name || name === 'Default') return { error: 'Invalid name' };
+    initDb(name);
+    return { success: true };
+  });
+  ipcMain.handle('workspace:switch', (_e, name) => {
+    initDb(name);
+    return { success: true };
+  });
+  ipcMain.handle('workspace:current', () => currentWorkspace);
+  ipcMain.handle('workspace:exportFile', (_e, subfolder, filename, buffer) => {
+    const wp = getWorkspacePath(currentWorkspace);
+    const targetFolder = path.join(wp, subfolder);
+    if (!fs.existsSync(targetFolder)) fs.mkdirSync(targetFolder, { recursive: true });
+    const fp = path.join(targetFolder, filename);
+    fs.writeFileSync(fp, Buffer.from(buffer));
+    return { success: true, path: fp };
+  });
 
   // ═══ BACKUP / RESTORE ═══
   ipcMain.handle('db:backup', async () => {
