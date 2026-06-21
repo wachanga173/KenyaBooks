@@ -9,6 +9,7 @@ app.commandLine.appendSwitch('ignore-certificate-errors');
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const require = createRequire(import.meta.url);
+const { autoUpdater } = require('electron-updater');
 
 let mainWindow;
 let db;
@@ -515,6 +516,7 @@ app.whenReady().then(() => {
   ipcMain.handle('app:openExternal', (_e, url) => shell.openExternal(url));
 
   createWindow();
+  autoUpdater.checkForUpdatesAndNotify();
   app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });
 });
 

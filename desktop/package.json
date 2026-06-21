@@ -2,6 +2,10 @@
   "name": "kenya-accounting-desktop",
   "private": true,
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wachanga173/KenyaBooks.git"
+  },
   "type": "module",
   "main": "dist-electron/main.js",
   "scripts": {
@@ -13,6 +17,7 @@
     "@fortune-sheet/react": "latest",
     "better-sqlite3": "^11.8.1",
     "docx": "^9.0.0",
+    "electron-updater": "^6.8.9",
     "jspdf": "^2.5.1",
     "lucide-react": "^0.470.0",
     "luckyexcel": "^1.0.1",
@@ -38,6 +43,13 @@
   "build": {
     "appId": "com.kenyaaccounting.desktop",
     "productName": "Kenya Accounting",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "wachanga173",
+        "repo": "KenyaBooks"
+      }
+    ],
     "directories": {
       "output": "release/${version}"
     },

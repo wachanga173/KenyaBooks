@@ -44,7 +44,7 @@ export const INVOICE_STATUSES = ['draft', 'sent', 'paid', 'overdue', 'cancelled'
 export const KRA_PORTALS = [
   { name: 'KRA iTax', url: 'https://itax.kra.go.ke' },
   { name: 'eTIMS', url: 'https://etims.kra.go.ke' },
-  { name: 'SHA', url: 'https://afyayangu.go.ke' },
+  { name: 'SHA', url: 'https://sha.go.ke/' },
   { name: 'NSSF', url: 'https://www.nssf.or.ke' },
   { name: 'CBK Rates', url: 'https://www.centralbank.go.ke' },
   { name: 'PPRA / PPIP', url: 'https://tenders.go.ke' },

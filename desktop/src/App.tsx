@@ -645,9 +645,6 @@ function BrowserView() {
   const [activePortal, setActivePortal] = useState(KRA_PORTALS[0]);
   return (
     <div className="h-full flex flex-col gap-3">
-      <div className="bg-yellow-500/10 border border-yellow-500/20 text-yellow-400/80 text-xs px-3 py-2 rounded-lg">
-        <strong>Note:</strong> Some government portals (like PPRA or NHIF) may occasionally display error pages (e.g., "502 Bad Gateway" or "Account Suspended") due to server downtime on their end. This is a nationwide issue, not an application error.
-      </div>
       <div className="flex gap-2 flex-wrap">
         {KRA_PORTALS.map(p => (
           <button key={p.name} onClick={() => setActivePortal(p)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${activePortal.name === p.name ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-[#27272a] text-gray-400 border border-transparent hover:bg-[#3f3f46]'}`}>{p.name}</button>
