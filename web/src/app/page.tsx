@@ -1,6 +1,16 @@
+'use client';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [os, setOs] = useState('win');
+
+  useEffect(() => {
+    const ua = window.navigator.userAgent.toLowerCase();
+    if (ua.indexOf('mac') !== -1) setOs('mac');
+    else if (ua.indexOf('linux') !== -1) setOs('linux');
+    else setOs('win');
+  }, []);
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-emerald-500/30">
       {/* Nav */}
@@ -10,7 +20,7 @@ export default function Home() {
             KenyaBooks
           </span>
           <Link
-            href="/api/download"
+            href={`/api/download?os=${os}`}
             className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-full text-sm transition-all hover:scale-105"
           >
             Download Free
@@ -37,10 +47,10 @@ export default function Home() {
 
         <div className="flex flex-col sm:flex-row gap-4 mb-20">
           <Link
-            href="/api/download"
+            href={`/api/download?os=${os}`}
             className="px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-full transition-all hover:scale-105 shadow-[0_0_40px_-10px_rgba(16,185,129,0.5)] flex items-center justify-center gap-2 text-lg"
           >
-            ⬇ Download for Windows (.exe)
+            ⬇ Download for {os === 'mac' ? 'Mac (.dmg)' : os === 'linux' ? 'Linux (.AppImage)' : 'Windows (.exe)'}
           </Link>
           <a
             href="#features"
