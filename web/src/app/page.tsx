@@ -4,12 +4,23 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [os, setOs] = useState('win');
+  const [version, setVersion] = useState('v1.0.0');
 
   useEffect(() => {
     const ua = window.navigator.userAgent.toLowerCase();
     if (ua.indexOf('mac') !== -1) setOs('mac');
     else if (ua.indexOf('linux') !== -1) setOs('linux');
     else setOs('win');
+
+    // Fetch latest version
+    fetch('https://api.github.com/repos/wachanga173/KenyaBooks/releases/latest')
+      .then(res => res.json())
+      .then(data => {
+        if (data.tag_name) {
+          setVersion(data.tag_name);
+        }
+      })
+      .catch(console.error);
   }, []);
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-emerald-500/30">
@@ -31,7 +42,7 @@ export default function Home() {
       <main className="container mx-auto px-6 py-24 flex flex-col items-center justify-center text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-medium mb-8 border border-emerald-500/20">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          KenyaBooks v1.0 is now live
+          KenyaBooks {version} is now live
         </div>
 
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 bg-gradient-to-br from-white via-white to-slate-400 bg-clip-text text-transparent max-w-4xl leading-tight">
