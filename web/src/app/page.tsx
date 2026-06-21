@@ -40,7 +40,7 @@ export default function Home() {
             href="/api/download"
             className="px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-full transition-all hover:scale-105 shadow-[0_0_40px_-10px_rgba(16,185,129,0.5)] flex items-center justify-center gap-2 text-lg"
           >
-            ⬇ Download for Windows (ZIP)
+            ⬇ Download for Windows (.exe)
           </Link>
           <a
             href="#features"

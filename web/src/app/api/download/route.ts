@@ -7,7 +7,7 @@ export async function GET() {
   
   // For MVP, redirect to the GitHub Release URL.
   // Replace with the actual GitHub Release URL once published.
-  const GITHUB_RELEASE_URL = 'https://github.com/yourusername/kenya-accounting/releases/latest/download/KenyaBooks-1.0.0-Portable.zip';
+  const GITHUB_RELEASE_URL = 'https://github.com/wachanga173/KenyaBooks/releases/download/v1.0.0/Kenya%20Accounting-1.0.0-Setup.exe';
   
   return NextResponse.redirect(GITHUB_RELEASE_URL);
 }
