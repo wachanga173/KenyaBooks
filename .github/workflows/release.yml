@@ -2,6 +2,8 @@ name: Build and Release
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*.*.*'
 
@@ -31,4 +33,21 @@ jobs:
         working-directory: ./desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx electron-builder --publish always
+        run: |
+          if [ "${{ github.ref_type }}" == "tag" ]; then
+            npx electron-builder --publish always
+          else
+            npx electron-builder --publish never
+          fi
+        shell: bash
+
+      - name: Upload Artifacts
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build-${{ matrix.os }}
+          path: |
+            desktop/release/**/*.exe
+            desktop/release/**/*.dmg
+            desktop/release/**/*.deb
+            desktop/release/**/*.AppImage
