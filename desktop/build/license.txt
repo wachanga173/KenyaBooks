@@ -1,29 +1,99 @@
-KENYABOOKS SOFTWARE LICENSE, TERMS OF SERVICE, AND PRIVACY POLICY
+KENYABOOKS END-USER LICENSE AGREEMENT AND PRIVACY POLICY
 
-IMPORTANT—READ CAREFULLY: This End-User License Agreement ("EULA") is a legal agreement between you (either an individual or a single entity) and the developers of KenyaBooks for the software product identified above, which includes computer software and may include associated media, printed materials, and "online" or electronic documentation ("SOFTWARE PRODUCT"). By installing, copying, or otherwise using the SOFTWARE PRODUCT, you agree to be bound by the terms of this EULA.
+PLEASE READ THIS END-USER LICENSE AGREEMENT ("AGREEMENT") CAREFULLY BEFORE DOWNLOADING, INSTALLING, OR USING THE KENYABOOKS DESKTOP APPLICATION ("SOFTWARE"). THIS AGREEMENT CONSTITUTES A BINDING LEGAL CONTRACT BETWEEN YOU (EITHER AN INDIVIDUAL OR A SINGLE LEGAL ENTITY) AND THE DEVELOPERS OF KENYABOOKS ("COMPANY," "WE," "US," OR "OUR"). 
+
+BY CLICKING "I AGREE," DOWNLOADING, INSTALLING, OR OTHERWISE USING THE SOFTWARE, YOU EXPRESSLY AGREE TO BE BOUND BY ALL THE TERMS AND CONDITIONS OF THIS AGREEMENT, INCLUDING THE PRIVACY POLICY STATED HEREIN. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT DOWNLOAD, INSTALL, OR USE THE SOFTWARE.
+
+--- PART I: TERMS OF SERVICE ---
 
 1. GRANT OF LICENSE
-This EULA grants you the following rights:
-- Installation and Use: You may install and use an unlimited number of copies of the SOFTWARE PRODUCT.
-- Reproduction and Distribution: You may reproduce and distribute an unlimited number of copies of the SOFTWARE PRODUCT.
+Subject to your strict compliance with the terms and conditions of this Agreement, the Company hereby grants you a personal, limited, non-exclusive, non-transferable, non-sublicensable, revocable license to install and use the Software on a compatible personal computer or device that you own or control, solely for your internal business or personal accounting purposes, in accordance with the features provided by the Software. This license is granted solely for use within the Republic of Kenya or by businesses subject to Kenyan accounting laws and regulations, but the Software may technically operate globally.
 
-2. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS
-- Maintenance of Copyright Notices: You must not remove or alter any copyright notices on any and all copies of the SOFTWARE PRODUCT.
-- Prohibition on Reverse Engineering, Decompilation, and Disassembly: You may not reverse engineer, decompile, or disassemble the SOFTWARE PRODUCT, except and only to the extent that such activity is expressly permitted by applicable law notwithstanding this limitation.
-- Rental: You may not rent, lease, or lend the SOFTWARE PRODUCT.
+2. RESTRICTIONS ON USE
+You shall not, and shall not permit any third party to:
+(a) modify, adapt, alter, translate, or create derivative works from the Software;
+(b) reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code for the Software, in whole or in part, except to the extent that such activity is expressly permitted by applicable law notwithstanding this limitation;
+(c) distribute, license, lease, rent, loan, or otherwise transfer the Software to any third party;
+(d) remove, alter, or obscure any proprietary notices, labels, or marks on the Software;
+(e) use the Software in any manner that could damage, disable, overburden, or impair the Software or any associated systems;
+(f) use the Software for any unlawful purpose, or in any manner inconsistent with this Agreement;
+(g) use the Software to transmit any viruses, worms, defects, Trojan horses, or any items of a destructive nature;
+(h) exploit the Software for any commercial purpose not expressly permitted herein, including but not limited to offering the Software as a service bureau or application service provider.
 
-3. TERMINATION
-Without prejudice to any other rights, KenyaBooks may terminate this EULA if you fail to comply with the terms and conditions of this EULA. In such event, you must destroy all copies of the SOFTWARE PRODUCT and all of its component parts.
+3. INTELLECTUAL PROPERTY RIGHTS
+The Software and all worldwide copyrights, trade secrets, trademarks, patents, and other intellectual property rights therein are the exclusive property of the Company and its licensors. The Company and its licensors reserve all rights in and to the Software not expressly granted to you in this Agreement. The Software is licensed, not sold, to you. 
 
-4. PRIVACY POLICY AND DATA LOCALIZATION
-- Data Storage: The SOFTWARE PRODUCT operates completely offline. All financial data, personal information, payroll records, and documents created or imported into the SOFTWARE PRODUCT are stored LOCALLY on your device's hard drive within the designated Workspace folder (e.g., Documents\KenyaBooks). 
-- Data Privacy: KenyaBooks does not transmit, collect, or upload your data to any external cloud servers or third-party analytics services. You are solely responsible for securing, encrypting, and backing up your local database and workspace files.
-- Third-Party Portals: The SOFTWARE PRODUCT includes a built-in browser for convenience to access external government portals (e.g., KRA iTax, SHA, NSSF, PPIP). When using these external portals, you are subject to the privacy policies of the respective government agencies. KenyaBooks does not intercept or record data transmitted through these encrypted portal sessions.
+4. OFFLINE NATURE OF THE SOFTWARE
+You acknowledge and agree that the Software is an "offline-first" application. All data, financial records, configurations, and other information entered into the Software are stored locally on your device using a local SQLite database. The Company does not host, sync, or back up your data on cloud servers. YOU ARE SOLELY RESPONSIBLE FOR MAINTAINING ADEQUATE BACKUPS OF ALL DATA ENTERED INTO THE SOFTWARE. THE COMPANY SHALL NOT BE LIABLE FOR ANY LOSS OF DATA RESULTING FROM HARDWARE FAILURE, SOFTWARE CORRUPTION, USER ERROR, OR ANY OTHER CAUSE.
 
-5. LIMITATION OF LIABILITY
-IN NO EVENT SHALL KENYABOOKS OR ITS SUPPLIERS BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE PRODUCT, EVEN IF KENYABOOKS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. 
+5. THIRD-PARTY SERVICES AND INTEGRATIONS
+The Software may contain features designed to interoperate with or access third-party websites or services, such as the Kenya Revenue Authority (KRA) iTax portal, eTIMS, NHIF, and NSSF (collectively, "Third-Party Services"). You understand that:
+(a) The Company has no control over these Third-Party Services;
+(b) The Third-Party Services may change their interfaces, APIs, or availability at any time without notice;
+(c) The Company does not guarantee the continued availability, accuracy, or functionality of these integrations;
+(d) Your use of Third-Party Services is governed entirely by the terms and conditions and privacy policies of the respective third parties.
 
-6. COMPLIANCE WITH LAWS
-You agree to use the SOFTWARE PRODUCT in compliance with all applicable local, state, national, and international laws, rules and regulations, including but not limited to Kenyan accounting, tax, and employment laws.
+6. DISCLAIMER OF WARRANTIES
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND. THE COMPANY HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS WITH RESPECT TO THE SOFTWARE, EITHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES AND/OR CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY QUALITY, OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET ENJOYMENT, AND NON-INFRINGEMENT OF THIRD-PARTY RIGHTS. 
+THE COMPANY DOES NOT WARRANT THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE, OR THAT DEFECTS IN THE SOFTWARE WILL BE CORRECTED. NO ORAL OR WRITTEN INFORMATION OR ADVICE GIVEN BY THE COMPANY OR ITS AUTHORIZED REPRESENTATIVES SHALL CREATE A WARRANTY. 
+THE SOFTWARE IS NOT A SUBSTITUTE FOR PROFESSIONAL ACCOUNTING, TAX, OR LEGAL ADVICE. YOU REMAIN SOLELY RESPONSIBLE FOR COMPLYING WITH ALL APPLICABLE TAX LAWS AND REGULATIONS.
 
-By accepting this agreement, you acknowledge that you have read and understand these terms.
+7. LIMITATION OF LIABILITY
+TO THE EXTENT NOT PROHIBITED BY LAW, IN NO EVENT SHALL THE COMPANY, ITS AFFILIATES, DIRECTORS, OFFICERS, EMPLOYEES, AGENTS, OR LICENSORS BE LIABLE FOR PERSONAL INJURY, OR ANY INCIDENTAL, SPECIAL, INDIRECT, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES WHATSOEVER, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA (INCLUDING FINANCIAL DATA), BUSINESS INTERRUPTION, COST OF SUBSTITUTE GOODS OR SERVICES, OR ANY OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE SOFTWARE, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF LIABILITY (CONTRACT, TORT, OR OTHERWISE) AND EVEN IF THE COMPANY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. 
+IN NO EVENT SHALL THE COMPANY'S TOTAL CUMULATIVE LIABILITY TO YOU FOR ALL DAMAGES (OTHER THAN AS MAY BE REQUIRED BY APPLICABLE LAW IN CASES INVOLVING PERSONAL INJURY) EXCEED THE AMOUNT OF FIFTY US DOLLARS ($50.00). THE FOREGOING LIMITATIONS WILL APPLY EVEN IF THE ABOVE STATED REMEDY FAILS OF ITS ESSENTIAL PURPOSE.
+
+8. INDEMNIFICATION
+You agree to indemnify, defend, and hold harmless the Company, its affiliates, and their respective officers, directors, employees, and agents from and against any and all claims, liabilities, damages, losses, costs, expenses, or fees (including reasonable attorneys' fees) that such parties may incur as a result of or arising from your (or anyone using your account/device) violation of this Agreement, your use or misuse of the Software, or your violation of any rights of any other person or entity.
+
+9. TERM AND TERMINATION
+This Agreement is effective until terminated by you or the Company. Your rights under this license will terminate automatically without notice from the Company if you fail to comply with any term(s) of this Agreement. Upon termination of the Agreement, you shall cease all use of the Software, and destroy all copies, full or partial, of the Software. The provisions of Sections 2, 3, 4, 6, 7, 8, 9, 10, and Part II (Privacy Policy) shall survive any termination of this Agreement.
+
+10. GOVERNING LAW AND DISPUTE RESOLUTION
+This Agreement shall be governed by and construed in accordance with the laws of the Republic of Kenya, excluding its conflicts of law rules. Any dispute, controversy, or claim arising out of or in connection with this Agreement, or the breach, termination, or invalidity thereof, shall be settled by arbitration in Nairobi, Kenya, in accordance with the rules of the Chartered Institute of Arbitrators (Kenya Branch) then in effect. The language to be used in the arbitral proceedings shall be English.
+
+11. MODIFICATIONS TO THIS AGREEMENT
+The Company reserves the right, at its sole discretion, to modify or replace this Agreement at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. By continuing to access or use our Software after those revisions become effective, you agree to be bound by the revised terms.
+
+--- PART II: PRIVACY POLICY ---
+
+This Privacy Policy explains how KenyaBooks ("we", "us", or "our") handles your information when you use the KenyaBooks Desktop Application ("Software").
+
+1. OUR OFFLINE-FIRST PHILOSOPHY
+We built KenyaBooks with privacy and data ownership as foundational principles. The Software operates entirely on your local machine. We do not require you to create an account with us, nor do we require a persistent internet connection to function (except when accessing specific third-party portals or updates).
+
+2. DATA WE DO NOT COLLECT
+Because the Software is offline-first:
+- We DO NOT collect, store, or transmit your financial data, invoices, client information, inventory records, or employee details to our servers.
+- We DO NOT collect your KRA PIN, eTIMS credentials, NHIF, or NSSF login information.
+- We DO NOT run remote telemetry or tracking scripts on your local database.
+All such data is stored exclusively in a local SQLite database residing on your computer's hard drive.
+
+3. DATA WE MAY COLLECT
+While your financial data remains local, the Software may collect minimal information solely for the purpose of maintaining and improving the Software:
+(a) Update Checks: The Software may periodically check our servers to determine if a newer version is available. During this process, we may log your IP address, operating system version, and the current version of the Software you are running.
+(b) Crash Reports (Opt-In): If the Software crashes, you may be prompted to send a crash report. This report may include technical details such as memory state, stack traces, and system configuration. It is intended to contain no personal financial data, but may inadvertently contain file paths or application state data. You have the right to review and decline sending crash reports.
+
+4. THIRD-PARTY PORTALS
+The Software contains embedded web browsers (webviews) that allow you to access government and banking portals (e.g., KRA iTax, eTIMS). 
+When you interact with these portals:
+- You are communicating directly with the servers of those respective third parties.
+- The Company does not intercept, read, or store the traffic between you and these third-party services.
+- Your data privacy and security during these sessions are governed by the privacy policies of those third-party organizations (e.g., the Government of Kenya).
+
+5. DATA SECURITY
+Although we do not hold your data, we strongly encourage you to implement robust security practices on your local machine:
+- Use strong passwords or biometric authentication for your operating system user account.
+- Enable full-disk encryption (e.g., BitLocker, FileVault).
+- Implement a reliable, encrypted backup strategy for your computer.
+We are not responsible for unauthorized access to the device on which you run the Software.
+
+6. YOUR RIGHTS
+Because we do not hold your personal financial data, any requests for data access, correction, deletion, or export must be fulfilled by you directly within the Software interface or by querying the local SQLite database.
+
+7. CHANGES TO THIS PRIVACY POLICY
+We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "effective date" at the top of this policy. You are advised to review this Privacy Policy periodically for any changes.
+
+8. CONTACT US
+If you have any questions about this Agreement or Privacy Policy, please contact the maintainers via the official GitHub repository for KenyaBooks.
+
+BY PROCEEDING TO INSTALL THE SOFTWARE, YOU AFFIRM THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO ALL THE TERMS OUTLINED IN THIS AGREEMENT AND PRIVACY POLICY.

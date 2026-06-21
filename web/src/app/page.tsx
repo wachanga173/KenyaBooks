@@ -105,10 +105,18 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-slate-800 py-12">
         <div className="container mx-auto px-6 text-center text-slate-500 text-sm">
-          <p>
+          <p className="mb-4">
             © {new Date().getFullYear()} KenyaBooks. Built for Kenyan
             businesses. Free & open source.
           </p>
+          <div className="flex justify-center gap-6">
+            <Link href="/terms" className="hover:text-emerald-400 transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/privacy" className="hover:text-emerald-400 transition-colors">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
