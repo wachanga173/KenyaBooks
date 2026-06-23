@@ -198,7 +198,8 @@ function initDb(workspaceName = 'Default') {
       const ins = db.prepare('INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)');
       db.transaction(() => {
         ins.run('company_name', 'My Company Ltd');
-        ins.run('admin_name', 'Peter');
+        ins.run('admin_name', '');
+        ins.run('admin_email', '');
         ins.run('kra_pin', '');
         ins.run('vat_number', '');
         ins.run('currency', 'KES');
@@ -544,12 +545,12 @@ app.whenReady().then(() => {
   ipcMain.handle('db:backup', async () => {
     if (!db) return { error: 'DB not available' };
     const r = await dialog.showSaveDialog(mainWindow, { title: 'Backup', defaultPath: `kenyabooks-backup-${new Date().toISOString().slice(0,10)}.sqlite`, filters: [{ name: 'SQLite', extensions: ['sqlite'] }] });
-    if (!r.canceled && r.filePath) { const p = path.join(app.getPath('userData'), 'kenya_accounting.sqlite'); fs.copyFileSync(p, r.filePath); return { success: true, path: r.filePath }; }
+    if (!r.canceled && r.filePath) { const p = path.join(getWorkspacePath(currentWorkspace), 'kenya_accounting.sqlite'); fs.copyFileSync(p, r.filePath); return { success: true, path: r.filePath }; }
     return { canceled: true };
   });
   ipcMain.handle('db:restore', async () => {
     const r = await dialog.showOpenDialog(mainWindow, { title: 'Restore', filters: [{ name: 'SQLite', extensions: ['sqlite'] }], properties: ['openFile'] });
-    if (!r.canceled && r.filePaths.length > 0) { const p = path.join(app.getPath('userData'), 'kenya_accounting.sqlite'); db.close(); fs.copyFileSync(r.filePaths[0], p); initDb(); return { success: true }; }
+    if (!r.canceled && r.filePaths.length > 0) { const p = path.join(getWorkspacePath(currentWorkspace), 'kenya_accounting.sqlite'); db.close(); fs.copyFileSync(r.filePaths[0], p); initDb(currentWorkspace); return { success: true }; }
     return { canceled: true };
   });
 

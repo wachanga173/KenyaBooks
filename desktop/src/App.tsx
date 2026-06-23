@@ -4,12 +4,12 @@ import {
   Globe, Settings, Calculator, Plus, Pencil, Trash2, TrendingUp,
   ArrowDownRight, FileText, DollarSign, CreditCard, Package, Landmark,
   ClipboardList, Users, BarChart3, Search, ChevronRight, ArrowUpRight,
-  Banknote, Download, FileJson, FileIcon, Folder
+  Banknote, Download, FileJson, FileIcon, Folder, Printer
 } from 'lucide-react';
 import SpreadsheetView from './components/SpreadsheetView';
 import { Modal, useConfirm, Input, Select, Textarea, StatusBadge, EmptyState } from './components/ui';
 import { KENYA_COUNTIES, PAYMENT_METHODS, ACCOUNT_TYPES, KRA_PORTALS, formatKES, today, calculatePAYE, calculateNHIF, calculateNSSF } from './lib/constants';
-import { exportToExcel, exportToPDF, exportToWord, importFromExcel } from './lib/exportUtils';
+import { exportToExcel, exportToPDF, exportToWord, importFromExcel, printTable, generateInvoicePDF } from './lib/exportUtils';
 
 const api = () => (window as any).api;
 
@@ -151,6 +151,8 @@ function CrudModule({ title, apiName, columns, formFields, emptyIcon, renderForm
         <div className="flex items-center gap-2">
           {rows.length > 0 && (
             <div className="flex items-center bg-[#18181b] border border-[#27272a] rounded-lg overflow-hidden h-[30px]">
+              <button onClick={() => printTable(rows, columns, title)} className="px-3 py-1 text-xs text-gray-300 hover:bg-[#27272a] transition-colors flex items-center gap-1"><Printer className="w-3.5 h-3.5"/> Print</button>
+              <div className="w-px h-4 bg-[#27272a]" />
               <button onClick={() => exportToExcel(rows, columns, title)} className="px-3 py-1 text-xs text-emerald-400 hover:bg-[#27272a] transition-colors flex items-center gap-1"><FileSpreadsheet className="w-3.5 h-3.5"/> Excel</button>
               <div className="w-px h-4 bg-[#27272a]" />
               <button onClick={() => exportToPDF(rows, columns, title)} className="px-3 py-1 text-xs text-red-400 hover:bg-[#27272a] transition-colors flex items-center gap-1"><FileText className="w-3.5 h-3.5"/> PDF</button>
@@ -272,46 +274,159 @@ function ContactsView() {
 // ═══════════════════════════════════
 //  INVOICING
 // ═══════════════════════════════════
-function InvoicingView() {
+function InvoiceForm({ form, setForm, isEdit }: { form: any; setForm: (f: any) => void; isEdit: boolean }) {
+  const [contacts, setContacts] = useState<any[]>([]);
+  const [nextNum, setNextNum] = useState('');
+
+  useEffect(() => {
+    api()?.contacts.getAll({ type: 'customer' }).then(setContacts);
+    if (!isEdit) {
+      api()?.invoices.nextNumber().then((n: string) => {
+        setNextNum(n);
+        setForm((f: any) => ({ ...f, invoice_number: n, type: 'sales', date: today(), status: 'draft' }));
+      });
+    }
+  }, []);
+
+  const subtotal = parseFloat(form.subtotal || 0);
+  const vat = subtotal * 0.16;
+
+  useEffect(() => {
+    setForm((f: any) => ({ ...f, vat_amount: vat, total: subtotal + vat }));
+  }, [subtotal]);
+
   return (
-    <CrudModule
-      title="Invoices" apiName="invoices" emptyIcon={Receipt}
-      columns={[
-        { key: 'invoice_number', label: 'Invoice #', render: r => <span className="font-mono text-emerald-400">{r.invoice_number}</span> },
-        { key: 'contact_name', label: 'Client' },
-        { key: 'date', label: 'Date' },
-        { key: 'vat_amount', label: 'VAT', render: r => formatKES(r.vat_amount || 0) },
-        { key: 'total', label: 'Total', render: r => <span className="font-medium text-gray-200">{formatKES(r.total || 0)}</span> },
-        { key: 'status', label: 'Status', render: r => <StatusBadge status={r.status} /> },
-      ]}
-      renderForm={(form, setForm, isEdit) => {
-        const [contacts, setContacts] = useState<any[]>([]);
-        const [nextNum, setNextNum] = useState('');
-        useEffect(() => {
-          api()?.contacts.getAll({ type: 'customer' }).then(setContacts);
-          if (!isEdit) api()?.invoices.nextNumber().then(n => { setNextNum(n); setForm((f: any) => ({ ...f, invoice_number: n, type: 'sales', date: today(), status: 'draft' })); });
-        }, []);
-        const subtotal = parseFloat(form.subtotal || 0);
-        const vat = subtotal * 0.16;
-        useEffect(() => { setForm((f: any) => ({ ...f, vat_amount: vat, total: subtotal + vat })); }, [subtotal]);
-        return (
-          <div className="grid grid-cols-2 gap-3">
-            <Input label="Invoice #" value={form.invoice_number || nextNum} onChange={e => setForm({...form, invoice_number: e.target.value})} required />
-            <Select label="Client" value={form.contact_id || ''} onChange={e => setForm({...form, contact_id: parseInt(e.target.value)})} options={[{ value: '', label: 'Select...' }, ...contacts.map(c => ({ value: String(c.id), label: c.name }))]} />
-            <Input label="Date" type="date" value={form.date || today()} onChange={e => setForm({...form, date: e.target.value})} required />
-            <Input label="Due Date" type="date" value={form.due_date || ''} onChange={e => setForm({...form, due_date: e.target.value})} />
-            <Input label="Subtotal (KES)" type="number" value={form.subtotal || ''} onChange={e => setForm({...form, subtotal: parseFloat(e.target.value) || 0})} />
-            <Select label="Status" value={form.status || 'draft'} onChange={e => setForm({...form, status: e.target.value})} options={[{ value: 'draft', label: 'Draft' }, { value: 'sent', label: 'Sent' }, { value: 'paid', label: 'Paid' }, { value: 'overdue', label: 'Overdue' }]} />
-            <Input label="eTIMS Number" value={form.etims_number || ''} onChange={e => setForm({...form, etims_number: e.target.value})} />
-            <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1">VAT (16%)</label>
-              <div className="px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-emerald-400">{formatKES(vat)}</div>
+    <div className="grid grid-cols-2 gap-3">
+      <Input label="Invoice #" value={form.invoice_number || nextNum} onChange={e => setForm({...form, invoice_number: e.target.value})} required />
+      <Select label="Client" value={form.contact_id || ''} onChange={e => setForm({...form, contact_id: parseInt(e.target.value)})} options={[{ value: '', label: 'Select...' }, ...contacts.map(c => ({ value: String(c.id), label: c.name }))]} />
+      <Input label="Date" type="date" value={form.date || today()} onChange={e => setForm({...form, date: e.target.value})} required />
+      <Input label="Due Date" type="date" value={form.due_date || ''} onChange={e => setForm({...form, due_date: e.target.value})} />
+      <Input label="Subtotal (KES)" type="number" value={form.subtotal || ''} onChange={e => setForm({...form, subtotal: parseFloat(e.target.value) || 0})} />
+      <Select label="Status" value={form.status || 'draft'} onChange={e => setForm({...form, status: e.target.value})} options={[{ value: 'draft', label: 'Draft' }, { value: 'sent', label: 'Sent' }, { value: 'paid', label: 'Paid' }, { value: 'overdue', label: 'Overdue' }]} />
+      <Input label="eTIMS Number" value={form.etims_number || ''} onChange={e => setForm({...form, etims_number: e.target.value})} />
+      <div>
+        <label className="block text-xs font-medium text-gray-400 mb-1">VAT (16%)</label>
+        <div className="px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-emerald-400">{formatKES(vat)}</div>
+      </div>
+      <div className="col-span-2"><Textarea label="Notes" value={form.notes || ''} onChange={e => setForm({...form, notes: e.target.value})} /></div>
+    </div>
+  );
+}
+
+function InvoicingView() {
+  const [rows, setRows] = useState<any[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editRow, setEditRow] = useState<any>(null);
+  const [form, setForm] = useState<any>({});
+  const { confirm, ConfirmDialog } = useConfirm();
+
+  useEffect(() => { load(); }, []);
+  async function load() { setRows(await api()?.invoices.getAll() || []); }
+
+  function openCreate() { setEditRow(null); setForm({}); setModalOpen(true); }
+  function openEdit(row: any) { setEditRow(row); setForm({ ...row }); setModalOpen(true); }
+
+  async function handleSave(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      if (editRow) {
+        const { id, created_at, contact_name, contact_kra_pin, ...data } = form;
+        await api().invoices.update(editRow.id, data);
+      } else {
+        await api().invoices.create(form);
+      }
+      setModalOpen(false); load();
+    } catch (err: any) { alert('Error: ' + (err.message || err)); }
+  }
+
+  async function handleDelete(id: number) {
+    if (await confirm('Delete this invoice?')) { await api().invoices.delete(id); load(); }
+  }
+
+  async function handleDownloadPDF(invoice: any) {
+    const settings = await api()?.settings.getAll() || {};
+    await generateInvoicePDF(invoice, settings);
+  }
+
+  const columns = [
+    { key: 'invoice_number', label: 'Invoice #' },
+    { key: 'contact_name', label: 'Client' },
+    { key: 'date', label: 'Date' },
+    { key: 'vat_amount', label: 'VAT' },
+    { key: 'total', label: 'Total' },
+    { key: 'status', label: 'Status' },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <ConfirmDialog />
+      <div className="flex items-center justify-between">
+        <h2 className="text-base font-semibold text-gray-200">Invoices</h2>
+        <div className="flex items-center gap-2">
+          {rows.length > 0 && (
+            <div className="flex items-center bg-[#18181b] border border-[#27272a] rounded-lg overflow-hidden h-[30px]">
+              <button onClick={() => printTable(rows, columns, 'Invoices')} className="px-3 py-1 text-xs text-gray-300 hover:bg-[#27272a] transition-colors flex items-center gap-1"><Printer className="w-3.5 h-3.5"/> Print</button>
+              <div className="w-px h-4 bg-[#27272a]" />
+              <button onClick={() => exportToExcel(rows, columns, 'Invoices')} className="px-3 py-1 text-xs text-emerald-400 hover:bg-[#27272a] transition-colors flex items-center gap-1"><FileSpreadsheet className="w-3.5 h-3.5"/> Excel</button>
+              <div className="w-px h-4 bg-[#27272a]" />
+              <button onClick={() => exportToPDF(rows, columns, 'Invoices')} className="px-3 py-1 text-xs text-red-400 hover:bg-[#27272a] transition-colors flex items-center gap-1"><FileText className="w-3.5 h-3.5"/> PDF</button>
             </div>
-            <div className="col-span-2"><Textarea label="Notes" value={form.notes || ''} onChange={e => setForm({...form, notes: e.target.value})} /></div>
+          )}
+          <button onClick={openCreate} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-medium rounded-lg transition-colors h-[30px]">
+            <Plus className="w-3.5 h-3.5" /> New Invoice
+          </button>
+        </div>
+      </div>
+
+      {rows.length === 0 ? (
+        <EmptyState message="No invoices yet. Click New Invoice to create one." icon={Receipt} />
+      ) : (
+        <div className="rounded-xl border border-[#27272a] bg-[#0a0a0c] overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-[#27272a] bg-[#18181b]/50">
+                <th className="text-left px-3 py-2.5 text-gray-500 font-medium text-xs">Invoice #</th>
+                <th className="text-left px-3 py-2.5 text-gray-500 font-medium text-xs">Client</th>
+                <th className="text-left px-3 py-2.5 text-gray-500 font-medium text-xs">Date</th>
+                <th className="text-left px-3 py-2.5 text-gray-500 font-medium text-xs">VAT</th>
+                <th className="text-left px-3 py-2.5 text-gray-500 font-medium text-xs">Total</th>
+                <th className="text-left px-3 py-2.5 text-gray-500 font-medium text-xs">Status</th>
+                <th className="w-28 px-3 py-2.5 text-gray-500 font-medium text-xs text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#27272a]">
+              {rows.map(row => (
+                <tr key={row.id} className="hover:bg-[#18181b] transition-colors">
+                  <td className="px-3 py-2 text-xs"><span className="font-mono text-emerald-400">{row.invoice_number}</span></td>
+                  <td className="px-3 py-2 text-gray-300 text-xs">{row.contact_name}</td>
+                  <td className="px-3 py-2 text-gray-300 text-xs">{row.date}</td>
+                  <td className="px-3 py-2 text-gray-300 text-xs">{formatKES(row.vat_amount || 0)}</td>
+                  <td className="px-3 py-2 text-xs"><span className="font-medium text-gray-200">{formatKES(row.total || 0)}</span></td>
+                  <td className="px-3 py-2 text-xs"><StatusBadge status={row.status} /></td>
+                  <td className="px-3 py-2 text-right">
+                    <div className="flex justify-end gap-1">
+                      <button onClick={() => handleDownloadPDF(row)} className="p-1 text-gray-600 hover:text-cyan-400 transition-colors" title="Download Invoice PDF"><Download className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => openEdit(row)} className="p-1 text-gray-600 hover:text-emerald-400 transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => handleDelete(row.id)} className="p-1 text-gray-600 hover:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editRow ? 'Edit Invoice' : 'New Invoice'}>
+        <form onSubmit={handleSave} className="space-y-3">
+          <InvoiceForm form={form} setForm={setForm} isEdit={!!editRow} />
+          <div className="flex justify-end gap-2 pt-2">
+            <button type="button" onClick={() => setModalOpen(false)} className="px-4 py-2 bg-[#27272a] text-gray-300 text-xs rounded-lg hover:bg-[#3f3f46]">Cancel</button>
+            <button type="submit" className="px-4 py-2 bg-emerald-500 text-black text-xs font-medium rounded-lg hover:bg-emerald-400">{editRow ? 'Update' : 'Create'}</button>
           </div>
-        );
-      }}
-    />
+        </form>
+      </Modal>
+    </div>
   );
 }
 
@@ -346,6 +461,26 @@ function ExpensesView() {
 // ═══════════════════════════════════
 //  PAYMENTS
 // ═══════════════════════════════════
+function PaymentForm({ form, setForm }: { form: any; setForm: (f: any) => void }) {
+  const [contacts, setContacts] = useState<any[]>([]);
+
+  useEffect(() => {
+    api()?.contacts.getAll().then(setContacts);
+  }, []);
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <Input label="Date" type="date" value={form.date || today()} onChange={e => setForm({...form, date: e.target.value})} required />
+      <Select label="Direction" value={form.direction || 'in'} onChange={e => setForm({...form, direction: e.target.value})} options={[{ value: 'in', label: 'Payment Received' }, { value: 'out', label: 'Payment Sent' }]} />
+      <Select label="Contact" value={form.contact_id || ''} onChange={e => setForm({...form, contact_id: parseInt(e.target.value)})} options={[{ value: '', label: 'Select...' }, ...contacts.map(c => ({ value: String(c.id), label: `${c.name} (${c.type})` }))]} />
+      <Input label="Amount (KES)" type="number" value={form.amount || ''} onChange={e => setForm({...form, amount: parseFloat(e.target.value) || 0})} required />
+      <Select label="Payment Method" value={form.payment_method || 'mpesa'} onChange={e => setForm({...form, payment_method: e.target.value})} options={PAYMENT_METHODS} />
+      <Input label="Reference" value={form.reference || ''} onChange={e => setForm({...form, reference: e.target.value})} />
+      <div className="col-span-2"><Input label="Notes" value={form.notes || ''} onChange={e => setForm({...form, notes: e.target.value})} /></div>
+    </div>
+  );
+}
+
 function PaymentsView() {
   return (
     <CrudModule
@@ -359,14 +494,7 @@ function PaymentsView() {
         { key: 'reference', label: 'Reference' },
       ]}
       renderForm={(form, setForm) => (
-        <div className="grid grid-cols-2 gap-3">
-          <Input label="Date" type="date" value={form.date || today()} onChange={e => setForm({...form, date: e.target.value})} required />
-          <Select label="Direction" value={form.direction || 'in'} onChange={e => setForm({...form, direction: e.target.value})} options={[{ value: 'in', label: 'Payment Received' }, { value: 'out', label: 'Payment Sent' }]} />
-          <Input label="Amount (KES)" type="number" value={form.amount || ''} onChange={e => setForm({...form, amount: parseFloat(e.target.value) || 0})} required />
-          <Select label="Payment Method" value={form.payment_method || 'mpesa'} onChange={e => setForm({...form, payment_method: e.target.value})} options={PAYMENT_METHODS} />
-          <Input label="Reference" value={form.reference || ''} onChange={e => setForm({...form, reference: e.target.value})} />
-          <div className="col-span-2"><Input label="Notes" value={form.notes || ''} onChange={e => setForm({...form, notes: e.target.value})} /></div>
-        </div>
+        <PaymentForm form={form} setForm={setForm} />
       )}
     />
   );
@@ -426,6 +554,8 @@ function PayrollView() {
         <div className="flex items-center gap-2">
           {rows.length > 0 && (
             <div className="flex items-center bg-[#18181b] border border-[#27272a] rounded-lg overflow-hidden h-[30px]">
+              <button onClick={() => printTable(rows, [{key: 'employee_name', label: 'Employee'}, {key: 'period', label: 'Period'}, {key: 'gross_pay', label: 'Gross'}, {key: 'paye', label: 'PAYE'}, {key: 'nhif', label: 'NHIF'}, {key: 'nssf', label: 'NSSF'}, {key: 'net_pay', label: 'Net Pay'}], 'Payroll')} className="px-3 py-1 text-xs text-gray-300 hover:bg-[#27272a] transition-colors flex items-center gap-1"><Printer className="w-3.5 h-3.5"/> Print</button>
+              <div className="w-px h-4 bg-[#27272a]" />
               <button onClick={() => exportToExcel(rows, [{key: 'employee_name', label: 'Employee'}, {key: 'period', label: 'Period'}, {key: 'gross_pay', label: 'Gross'}, {key: 'paye', label: 'PAYE'}, {key: 'nhif', label: 'NHIF'}, {key: 'nssf', label: 'NSSF'}, {key: 'net_pay', label: 'Net Pay'}], 'Payroll')} className="px-3 py-1 text-xs text-emerald-400 hover:bg-[#27272a] transition-colors flex items-center gap-1"><FileSpreadsheet className="w-3.5 h-3.5"/> Excel</button>
               <div className="w-px h-4 bg-[#27272a]" />
               <button onClick={() => exportToPDF(rows, [{key: 'employee_name', label: 'Employee'}, {key: 'period', label: 'Period'}, {key: 'gross_pay', label: 'Gross'}, {key: 'paye', label: 'PAYE'}, {key: 'nhif', label: 'NHIF'}, {key: 'nssf', label: 'NSSF'}, {key: 'net_pay', label: 'Net Pay'}], 'Payroll')} className="px-3 py-1 text-xs text-red-400 hover:bg-[#27272a] transition-colors flex items-center gap-1"><FileText className="w-3.5 h-3.5"/> PDF</button>
