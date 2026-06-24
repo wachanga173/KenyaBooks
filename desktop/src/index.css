@@ -22,6 +22,33 @@ body {
   height: 100vh;
 }
 
+/* ── Electron form fix: ensure all form elements are interactive ── */
+input,
+select,
+textarea {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  cursor: text;
+  -webkit-app-region: no-drag;
+  pointer-events: auto !important;
+}
+
+select {
+  cursor: pointer;
+}
+
+input[type="date"],
+input[type="month"],
+input[type="number"],
+input[type="file"] {
+  cursor: pointer;
+}
+
+button {
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;

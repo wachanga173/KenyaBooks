@@ -5,8 +5,8 @@ import { X } from 'lucide-react';
 export function Modal({ open, onClose, title, children, wide }: { open: boolean; onClose: () => void; title: string; children: ReactNode; wide?: boolean }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
-      <div className={`bg-[#0a0a0c] border border-[#27272a] rounded-xl shadow-2xl ${wide ? 'w-[800px]' : 'w-[540px]'} max-h-[85vh] flex flex-col`} onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className={`bg-[#0a0a0c] border border-[#27272a] rounded-xl shadow-2xl ${wide ? 'w-[800px]' : 'w-[540px]'} max-h-[85vh] flex flex-col`} onMouseDown={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#27272a]">
           <h3 className="text-sm font-semibold text-gray-200">{title}</h3>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-300 transition-colors"><X className="w-4 h-4" /></button>
@@ -44,21 +44,21 @@ export function useConfirm() {
 }
 
 // ── Input Component ──
-export function Input({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+export function Input({ label, className, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div>
       <label className="block text-xs font-medium text-gray-400 mb-1">{label}</label>
-      <input {...props} className="w-full px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-gray-200 focus:border-emerald-500 outline-none transition-colors" />
+      <input {...props} className={`w-full px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-gray-200 focus:border-emerald-500 outline-none transition-colors ${className || ''}`} />
     </div>
   );
 }
 
 // ── Select Component ──
-export function Select({ label, options, ...props }: { label: string; options: { value: string; label: string }[] } & React.SelectHTMLAttributes<HTMLSelectElement>) {
+export function Select({ label, options, className, ...props }: { label: string; options: { value: string; label: string }[] } & React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <div>
       <label className="block text-xs font-medium text-gray-400 mb-1">{label}</label>
-      <select {...props} className="w-full px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-gray-200 focus:border-emerald-500 outline-none transition-colors">
+      <select {...props} className={`w-full px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-gray-200 focus:border-emerald-500 outline-none transition-colors ${className || ''}`}>
         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>
@@ -66,11 +66,11 @@ export function Select({ label, options, ...props }: { label: string; options: {
 }
 
 // ── Textarea Component ──
-export function Textarea({ label, ...props }: { label: string } & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function Textarea({ label, className, ...props }: { label: string } & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <div>
       <label className="block text-xs font-medium text-gray-400 mb-1">{label}</label>
-      <textarea {...props} className="w-full px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-gray-200 focus:border-emerald-500 outline-none transition-colors resize-none" rows={3} />
+      <textarea {...props} className={`w-full px-3 py-2 bg-[#18181b] border border-[#27272a] rounded-lg text-sm text-gray-200 focus:border-emerald-500 outline-none transition-colors resize-none ${className || ''}`} rows={3} />
     </div>
   );
 }
