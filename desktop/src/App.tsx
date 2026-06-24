@@ -73,10 +73,10 @@ function DashboardView({ onNavigate }: { onNavigate: (tab: string) => void }) {
 // ═══════════════════════════════════
 //  GENERIC CRUD TABLE COMPONENT
 // ═══════════════════════════════════
-function CrudModule({ title, apiName, columns, formFields, emptyIcon, renderForm, customCreate }: {
+function CrudModule({ title, apiName, columns, formFields, emptyIcon, renderForm, customCreate, initialForm = {} }: {
   title: string; apiName: string; columns: { key: string; label: string; render?: (row: any) => React.ReactNode }[];
   formFields?: any[]; emptyIcon: any; renderForm?: (form: any, setForm: any, isEdit: boolean) => React.ReactNode;
-  customCreate?: (data: any) => Promise<any>;
+  customCreate?: (data: any) => Promise<any>; initialForm?: any;
 }) {
   const [rows, setRows] = useState<any[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -93,7 +93,7 @@ function CrudModule({ title, apiName, columns, formFields, emptyIcon, renderForm
 
   function openCreate() {
     setEditRow(null);
-    setForm({});
+    setForm({ ...initialForm });
     setModalOpen(true);
   }
 
@@ -223,7 +223,7 @@ function CrudModule({ title, apiName, columns, formFields, emptyIcon, renderForm
 function AccountsView() {
   return (
     <CrudModule
-      title="Chart of Accounts" apiName="accounts" emptyIcon={BookOpen}
+      title="Chart of Accounts" apiName="accounts" emptyIcon={BookOpen} initialForm={{ type: 'asset' }}
       columns={[
         { key: 'code', label: 'Code', render: r => <span className="font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">{r.code}</span> },
         { key: 'name', label: 'Account Name' },
@@ -248,7 +248,7 @@ function AccountsView() {
 function ContactsView() {
   return (
     <CrudModule
-      title="Contacts" apiName="contacts" emptyIcon={Users}
+      title="Contacts" apiName="contacts" emptyIcon={Users} initialForm={{ type: 'customer', county: 'Nairobi' }}
       columns={[
         { key: 'name', label: 'Name', render: r => <span className="font-medium text-gray-200">{r.name}</span> },
         { key: 'type', label: 'Type', render: r => <StatusBadge status={r.type === 'customer' ? 'active' : r.type === 'supplier' ? 'sent' : 'completed'} /> },
@@ -436,7 +436,7 @@ function InvoicingView() {
 function ExpensesView() {
   return (
     <CrudModule
-      title="Expenses" apiName="expenses" emptyIcon={Wallet}
+      title="Expenses" apiName="expenses" emptyIcon={Wallet} initialForm={{ date: today(), payment_method: 'cash' }}
       columns={[
         { key: 'date', label: 'Date' },
         { key: 'description', label: 'Description' },
@@ -484,7 +484,7 @@ function PaymentForm({ form, setForm }: { form: any; setForm: (f: any) => void }
 function PaymentsView() {
   return (
     <CrudModule
-      title="Payments" apiName="payments" emptyIcon={CreditCard}
+      title="Payments" apiName="payments" emptyIcon={CreditCard} initialForm={{ date: today(), direction: 'in', payment_method: 'mpesa' }}
       columns={[
         { key: 'date', label: 'Date' },
         { key: 'contact_name', label: 'Contact' },
@@ -655,7 +655,7 @@ function PayrollView() {
 // ═══════════════════════════════════
 function InventoryView() {
   return (
-    <CrudModule title="Inventory" apiName="inventory" emptyIcon={Package}
+    <CrudModule title="Inventory" apiName="inventory" emptyIcon={Package} initialForm={{ quantity_on_hand: 0, unit_cost: 0, selling_price: 0, reorder_level: 0 }}
       columns={[
         { key: 'sku', label: 'SKU', render: r => <span className="font-mono text-xs text-cyan-400">{r.sku || '—'}</span> },
         { key: 'name', label: 'Item Name', render: r => <span className="font-medium text-gray-200">{r.name}</span> },
@@ -685,7 +685,7 @@ function InventoryView() {
 // ═══════════════════════════════════
 function AssetsView() {
   return (
-    <CrudModule title="Fixed Assets" apiName="assets" emptyIcon={Landmark}
+    <CrudModule title="Fixed Assets" apiName="assets" emptyIcon={Landmark} initialForm={{ purchase_date: today(), useful_life_years: 5, depreciation_method: 'straight_line' }}
       columns={[
         { key: 'name', label: 'Asset Name', render: r => <span className="font-medium text-gray-200">{r.name}</span> },
         { key: 'category', label: 'Category' },
@@ -715,7 +715,7 @@ function AssetsView() {
 // ═══════════════════════════════════
 function JournalView() {
   return (
-    <CrudModule title="Journal Entries" apiName="journal" emptyIcon={BookOpen}
+    <CrudModule title="Journal Entries" apiName="journal" emptyIcon={BookOpen} initialForm={{ date: today() }}
       columns={[
         { key: 'date', label: 'Date' },
         { key: 'reference', label: 'Reference', render: r => <span className="font-mono text-xs text-cyan-400">{r.reference || '—'}</span> },
