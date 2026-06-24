@@ -910,7 +910,7 @@ function WorkspacesView({ onWorkspaceChanged }: { onWorkspaceChanged: () => void
       <div className="rounded-xl border border-[#27272a] bg-[#0a0a0c] overflow-hidden">
         <div className="px-4 py-3 border-b border-[#27272a] bg-[#18181b]/50 flex justify-between items-center">
           <h3 className="text-sm font-medium text-gray-300">Your Workspaces</h3>
-          <span className="text-xs text-gray-500">Stored in Documents/KenyaBooks/Workspaces</span>
+          <span className="text-xs text-gray-500">Stored in Downloads/KenyaBooks/Workspaces</span>
         </div>
         <div className="divide-y divide-[#27272a]">
           {workspaces.map(w => (

@@ -17,9 +17,9 @@ let db;
 let currentWorkspace = 'Default';
 
 function getWorkspacePath(name) {
-  const docsPath = app.getPath('documents');
-  if (!name || name === 'Default') return path.join(docsPath, 'KenyaBooks');
-  return path.join(docsPath, 'KenyaBooks', 'Workspaces', name);
+  const downloadsPath = app.getPath('downloads');
+  if (!name || name === 'Default') return path.join(downloadsPath, 'KenyaBooks');
+  return path.join(downloadsPath, 'KenyaBooks', 'Workspaces', name);
 }
 
 function initDb(workspaceName = 'Default') {
