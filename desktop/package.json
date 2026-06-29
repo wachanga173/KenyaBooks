@@ -1,7 +1,7 @@
 {
   "name": "kenya-accounting-desktop",
   "private": true,
-  "version": "1.1.9",
+  "version": "1.2.0",
   "author": "Peter Wachanga <peter@example.com>",
   "repository": {
     "type": "git",

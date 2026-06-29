@@ -125,13 +125,30 @@ function CrudModule({ title, apiName, columns, formFields, emptyIcon, renderForm
     if (!file) return;
     try {
       const data = await importFromExcel(file, columns);
+      let successCount = 0;
+      let errorCount = 0;
       for (const row of data) {
-        await api()[apiName].create(row);
+        try {
+          const payload = { ...initialForm, ...row };
+          if (customCreate) {
+            await customCreate(payload);
+          } else {
+            await api()[apiName].create(payload);
+          }
+          successCount++;
+        } catch (err) {
+          errorCount++;
+          console.error('Import row error:', err);
+        }
       }
-      alert(`Successfully imported ${data.length} records!`);
+      if (errorCount > 0) {
+        alert(`Imported ${successCount} records. ${errorCount} records failed (e.g., missing required fields).`);
+      } else {
+        alert(`Successfully imported ${successCount} records!`);
+      }
       load();
     } catch (err: any) {
-      alert('Error importing data: ' + err.message);
+      alert('Error reading file: ' + err.message);
     }
     e.target.value = ''; // reset
   }
@@ -533,13 +550,25 @@ function PayrollView() {
     try {
       const exportCols = [{key: 'employee_name', label: 'Employee'}, {key: 'period', label: 'Period'}, {key: 'gross_pay', label: 'Gross'}, {key: 'paye', label: 'PAYE'}, {key: 'nhif', label: 'NHIF'}, {key: 'nssf', label: 'NSSF'}, {key: 'net_pay', label: 'Net Pay'}];
       const data = await importFromExcel(file, exportCols);
+      let successCount = 0;
+      let errorCount = 0;
       for (const row of data) {
-        await api().payroll.create({...row, status: 'completed'});
+        try {
+          await api().payroll.create({...row, status: 'completed'});
+          successCount++;
+        } catch (err) {
+          errorCount++;
+          console.error('Import row error:', err);
+        }
       }
-      alert(`Successfully imported ${data.length} payroll records!`);
+      if (errorCount > 0) {
+        alert(`Imported ${successCount} records. ${errorCount} records failed (e.g., missing required fields).`);
+      } else {
+        alert(`Successfully imported ${successCount} payroll records!`);
+      }
       load();
     } catch (err: any) {
-      alert('Error importing data: ' + err.message);
+      alert('Error reading file: ' + err.message);
     }
     e.target.value = '';
   }
@@ -841,6 +870,20 @@ function ReportsView() {
 // ═══════════════════════════════════
 function BrowserView() {
   const [activePortal, setActivePortal] = useState(KRA_PORTALS[0]);
+  const webviewRef = React.useRef<any>(null);
+
+  useEffect(() => {
+    const wv = webviewRef.current;
+    if (!wv) return;
+    const handleDomReady = () => {
+      wv.focus();
+    };
+    wv.addEventListener('dom-ready', handleDomReady);
+    return () => {
+      wv.removeEventListener('dom-ready', handleDomReady);
+    };
+  }, [activePortal]);
+
   return (
     <div className="h-full flex flex-col gap-3">
       <div className="flex gap-2 flex-wrap">
@@ -850,7 +893,7 @@ function BrowserView() {
       </div>
       <div className="flex-1 rounded-lg overflow-hidden border border-[#27272a] bg-white min-h-0">
         {/* @ts-ignore */}
-        <webview key={activePortal.url} src={activePortal.url} style={{ width: '100%', height: '100%' }} allowpopups="true"></webview>
+        <webview ref={webviewRef} key={activePortal.url} src={activePortal.url} style={{ width: '100%', height: '100%' }} allowpopups="true" tabIndex={0}></webview>
       </div>
     </div>
   );
